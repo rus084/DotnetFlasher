@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ProgLib": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
