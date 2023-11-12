@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgLib", "ProgLib\ProgLib.csproj", "{190F85C0-0A8D-4666-BB4C-9F046CC01FFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{18719D00-8560-4D6E-A31A-A6B317F2650C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Ubuntu|Any CPU = Debug_Ubuntu|Any CPU
@@ -21,6 +23,14 @@ Global
 		{190F85C0-0A8D-4666-BB4C-9F046CC01FFD}.Release_Ubuntu|Any CPU.Build.0 = Release|Any CPU
 		{190F85C0-0A8D-4666-BB4C-9F046CC01FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{190F85C0-0A8D-4666-BB4C-9F046CC01FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Debug_Ubuntu|Any CPU.ActiveCfg = Debug|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Debug_Ubuntu|Any CPU.Build.0 = Debug|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Release_Ubuntu|Any CPU.ActiveCfg = Release|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Release_Ubuntu|Any CPU.Build.0 = Release|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18719D00-8560-4D6E-A31A-A6B317F2650C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
