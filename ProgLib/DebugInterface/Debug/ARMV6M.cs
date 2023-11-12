@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProgLib.DebugInterface.Debug
 {
-    internal class CortexM0 : ICortexDebug
+    public class ARMV6M : IArmDebug
     {
         const uint DFSR = 0xE000ED30;
 
@@ -31,32 +31,32 @@ namespace ProgLib.DebugInterface.Debug
 
         const uint DCRDR = 0xE000EDF8;
 
-        Dictionary<ICortexDebug.Register, uint> RegisterId = new Dictionary<ICortexDebug.Register, uint>
+        Dictionary<IArmDebug.Register, uint> RegisterId = new Dictionary<IArmDebug.Register, uint>
         {
-            { ICortexDebug.Register.R0, 0 },
-            { ICortexDebug.Register.R1, 1 },
-            { ICortexDebug.Register.R2, 2 },
-            { ICortexDebug.Register.R3, 3 },
-            { ICortexDebug.Register.R4, 4 },
-            { ICortexDebug.Register.R5, 5 },
-            { ICortexDebug.Register.R6, 6 },
-            { ICortexDebug.Register.R7, 7 },
-            { ICortexDebug.Register.R8, 8 },
-            { ICortexDebug.Register.R9, 9 },
-            { ICortexDebug.Register.R10, 10 },
-            { ICortexDebug.Register.R11, 11 },
-            { ICortexDebug.Register.R12, 12 },
-            { ICortexDebug.Register.SP, 13 },
-            { ICortexDebug.Register.LR, 14 },
-            { ICortexDebug.Register.MSP, 17 },
-            { ICortexDebug.Register.PSP, 18 },
-            { ICortexDebug.Register.PC, 15 },
+            { IArmDebug.Register.R0, 0 },
+            { IArmDebug.Register.R1, 1 },
+            { IArmDebug.Register.R2, 2 },
+            { IArmDebug.Register.R3, 3 },
+            { IArmDebug.Register.R4, 4 },
+            { IArmDebug.Register.R5, 5 },
+            { IArmDebug.Register.R6, 6 },
+            { IArmDebug.Register.R7, 7 },
+            { IArmDebug.Register.R8, 8 },
+            { IArmDebug.Register.R9, 9 },
+            { IArmDebug.Register.R10, 10 },
+            { IArmDebug.Register.R11, 11 },
+            { IArmDebug.Register.R12, 12 },
+            { IArmDebug.Register.SP, 13 },
+            { IArmDebug.Register.LR, 14 },
+            { IArmDebug.Register.MSP, 17 },
+            { IArmDebug.Register.PSP, 18 },
+            { IArmDebug.Register.PC, 15 },
         };
 
 
         IMcuMemory memory;
 
-        public CortexM0(IMcuMemory memory)
+        public ARMV6M(IMcuMemory memory)
         {
             this.memory = memory;
         }
@@ -88,7 +88,7 @@ namespace ProgLib.DebugInterface.Debug
             throw new NotImplementedException();
         }
 
-        void SetRegisterRequest(ICortexDebug.Register register, bool write)
+        void SetRegisterRequest(IArmDebug.Register register, bool write)
         {
             uint value = RegisterId[register];
 
@@ -116,7 +116,7 @@ namespace ProgLib.DebugInterface.Debug
 
         }
 
-        public void SetRegisters(Dictionary<ICortexDebug.Register, uint> registers)
+        public void SetRegisters(Dictionary<IArmDebug.Register, uint> registers)
         {
             foreach (var reg in registers)
             {
@@ -126,9 +126,9 @@ namespace ProgLib.DebugInterface.Debug
             }
         }
 
-        public Dictionary<ICortexDebug.Register, uint> GetRegisters(params ICortexDebug.Register[] registers)
+        public Dictionary<IArmDebug.Register, uint> GetRegisters(params IArmDebug.Register[] registers)
         {
-            Dictionary<ICortexDebug.Register, uint> result = new();
+            Dictionary<IArmDebug.Register, uint> result = new();
 
             foreach (var reg in registers)
             {

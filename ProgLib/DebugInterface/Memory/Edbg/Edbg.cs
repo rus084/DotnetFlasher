@@ -9,25 +9,25 @@ using ProgLib.DebugInterface.Memory;
 
 namespace ProgLib.DebugInterface.Memory.Edbg
 {
-    class Edbg : IMcuMemory, IDisposable
+    public class Edbg : IMcuMemory, IDisposable
     {
 
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern int edbgLibStart(string target);
 
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern int edbgLibClose();
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern IntPtr edbgLibGetLastError();
 
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern int dap_reset_pin(int state);
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern int dap_reset_target_hw(int state);
 
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern int dap_read_block(uint addr, byte[] data, int size);
-        [DllImport("edbg.dll")]
+        [DllImport("libs/edbg.dll")]
         public static extern int dap_write_block(uint addr, byte[] data, int size);
 
 

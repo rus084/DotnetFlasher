@@ -47,7 +47,6 @@ namespace ProgLib.FlashLoader.CortexLoader
 
             public bool Equals(FlashSector obj)
             {
-                if (ReferenceEquals(this, obj)) return true;
                 if (obj.SzSector != SzSector) return false;
                 if (obj.AddrSector != AddrSector) return false;
                 return true;

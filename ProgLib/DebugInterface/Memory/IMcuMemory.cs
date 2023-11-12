@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProgLib.DebugInterface.Memory
 {
-    interface IMcuMemory
+    public interface IMcuMemory
     {
         byte[] Read8(uint address, int count);
         ushort[] Read16(uint address, int count);

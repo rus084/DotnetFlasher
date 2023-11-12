@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProgLib.FlashLoader.CortexLoader
 {
-    internal class FlashLoader
+    public class FlashLoader
     {
         struct SegmentInfo
         {
@@ -26,10 +26,12 @@ namespace ProgLib.FlashLoader.CortexLoader
             public int size;
         }
 
+        public (uint, uint) ValidFlashRange => (model.FlashDeviceDescriptor.DevAdr, model.FlashDeviceDescriptor.SzDev);
+        public byte EmplyVal => model.FlashDeviceDescriptor.ValEmpty;
 
         FlashLoaderModel model;
         IMcuMemory memory;
-        ICortexDebug debug;
+        IArmDebug debug;
         uint ramStart;
         uint ramSize;
 
@@ -38,7 +40,7 @@ namespace ProgLib.FlashLoader.CortexLoader
         uint breakAddr;
         uint stackInit;
 
-        public FlashLoader(IMcuMemory memory, ICortexDebug debug, string filePath, uint ramStart, uint ramSize)
+        public FlashLoader(IMcuMemory memory, IArmDebug debug, string filePath, uint ramStart, uint ramSize)
         {
             this.ramStart = ramStart;
             this.ramSize = ramSize;
@@ -78,25 +80,25 @@ namespace ProgLib.FlashLoader.CortexLoader
             Console.WriteLine($"Allocated stack @{emptyRegionStart.ToString("X8")} with {emptyRegionSize.ToString("X8")} size");
         }
 
-        public uint RemoteCall(uint addr, uint timeoutMs, params uint[] args)
+        private uint RemoteCall(uint addr, uint timeoutMs, params uint[] args)
         {
             var dataSectionAddr = model
                 .LoadableSections
                 .Where(x => x.type == FlashLoaderModel.LoadableSection.SectionType.data)
                 .Single().addr + ramStart;
 
-            var registers = new Dictionary<ICortexDebug.Register, uint>
+            var registers = new Dictionary<IArmDebug.Register, uint>
             {
-                { ICortexDebug.Register.PC, addr + ramStart},
-                { ICortexDebug.Register.LR, (breakAddr + ramStart) | 1},
-                { ICortexDebug.Register.R9, dataSectionAddr },
+                { IArmDebug.Register.PC, addr + ramStart},
+                { IArmDebug.Register.LR, (breakAddr + ramStart) | 1},
+                { IArmDebug.Register.R9, dataSectionAddr },
             };
 
-            var argsMap = new ICortexDebug.Register[]
+            var argsMap = new IArmDebug.Register[]
             {
-                ICortexDebug.Register.R0,
-                ICortexDebug.Register.R1,
-                ICortexDebug.Register.R2,
+                IArmDebug.Register.R0,
+                IArmDebug.Register.R1,
+                IArmDebug.Register.R2,
             };
 
             if (args.Length > argsMap.Length)
@@ -122,7 +124,7 @@ namespace ProgLib.FlashLoader.CortexLoader
                 throw new Exception("Execution was timed out");
             }
 
-            return debug.GetRegister(ICortexDebug.Register.R0);
+            return debug.GetRegister(IArmDebug.Register.R0);
         }
 
         void AssertRemoteCallSuccess(uint addr, uint timeoutMs, params uint[] args)
@@ -188,10 +190,10 @@ namespace ProgLib.FlashLoader.CortexLoader
 
             memory.Write16(breakAddr + ramStart, 0xBEAB);
 
-            debug.SetRegister(ICortexDebug.Register.SP, stackInit + ramStart);
+            debug.SetRegister(IArmDebug.Register.SP, stackInit + ramStart);
         }
 
-        public void Load(uint addr, byte[] data)
+        public void Load(uint addr, byte[] data, Action<double>? OnLoadProgress = null)
         {
             for (uint i = 0; i < data.Length;)
             {
@@ -210,6 +212,8 @@ namespace ProgLib.FlashLoader.CortexLoader
                 Console.WriteLine($"Loaded: {i.ToString("X8")}");
 
                 i += size;
+
+                OnLoadProgress?.Invoke((double)i / data.Length);
             }
         }
     }

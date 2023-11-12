@@ -1,14 +1,8 @@
-﻿using ProgLib.DebugInterface.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static ProgLib.DebugInterface.Debug.ICortexDebug;
+﻿using static ProgLib.DebugInterface.Debug.IArmDebug;
 
 namespace ProgLib.DebugInterface.Debug
 {
-    internal interface ICortexDebug
+    public interface IArmDebug
     {
         enum Register
         {
@@ -30,14 +24,14 @@ namespace ProgLib.DebugInterface.Debug
         List<uint> GetBPs();
     }
 
-    static class ICortexDebugExtensions
+    public static class ICortexDebugExtensions
     {
-        public static uint GetRegister(this ICortexDebug debug, Register register)
+        public static uint GetRegister(this IArmDebug debug, Register register)
         {
             return debug.GetRegisters(register).First().Value;
         }
 
-        public static void SetRegister(this ICortexDebug debug, Register register, uint value)
+        public static void SetRegister(this IArmDebug debug, Register register, uint value)
         {
             debug.SetRegisters(new Dictionary<Register, uint> { { register, value } });
         }
