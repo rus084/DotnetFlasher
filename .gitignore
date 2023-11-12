@@ -1,4 +1,6 @@
 .vs
+CliTool/bin
+CliTool/obj
 ProgLib/bin
 ProgLib/obj
 Test/bin
