@@ -209,8 +209,6 @@ namespace ProgLib.FlashLoader.CortexLoader
                 ProgramPageFunc(addr + i, size, bufferStart + ramStart);
                 UnInitFunc(2);
 
-                Console.WriteLine($"Loaded: {i.ToString("X8")}");
-
                 i += size;
 
                 OnLoadProgress?.Invoke((double)i / data.Length);
